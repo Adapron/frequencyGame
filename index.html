@@ -52,7 +52,7 @@
                 const up = sortedKeys[-resultIndex+1]
                 const mid = sortedKeys[-resultIndex]
                 const down = sortedKeys[-resultIndex-1]
-                resultDiv.innerText = `${inputStr}: not found, did you mean ${up}:${sortedKeys[up]}, ${mid}:${sortedKeys[mid]}, or ${down}:${sortedKeys[down]}?`;
+                resultDiv.innerText = `${inputStr}: not found, did you mean ${up}:${jsonDictionary[up]}, ${mid}:${jsonDictionary[mid]}, or ${down}:${jsonDictionary[down]}?`;
             }
             // Append the resultDiv to the start of the list with id "results"
             const firstChild = document.getElementById("results").firstChild;
