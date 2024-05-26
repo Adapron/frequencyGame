@@ -49,7 +49,10 @@
                 const key = sortedKeys[resultIndex];
                 resultDiv.innerText = `${inputStr}: ${jsonDictionary[key]}`;
             } else {
-                resultDiv.innerText = `${inputStr}: not found, did you mean ${jsonDictionary[-key]}, ${jsonDictionary[-key+1]}, ${jsonDictionary[-key-1]}`;
+                const up = jsonDictionary[sortedKeys[-resultIndex+1]]
+                const mid = jsonDictionary[sortedKeys[-resultIndex]]
+                const down = jsonDictionary[sortedKeys[-resultIndex-1]]
+                resultDiv.innerText = `${inputStr}: not found, did you mean ${up}, ${mid}, or ${down}`;
             }
             // Append the resultDiv to the start of the list with id "results"
             const firstChild = document.getElementById("results").firstChild;
