@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dictionary Search</title>
+    <script>
+        let jsonDictionary = {};
+        let sortedKeys = [];
+
+        // Function to perform binary search
+        function binarySearch(arr, target) {
+            let left = 0;
+            let right = arr.length - 1;
+            
+            while (left <= right) {
+                const mid = Math.floor((left + right) / 2);
+                const midVal = arr[mid];
+                
+                if (midVal === target) {
+                    return mid;
+                } else if (midVal < target) {
+                    left = mid + 1;
+                } else {
+                    right = mid - 1;
+                }
+            }
+            
+            return -1;
+        }
+
+        // Function to handle search
+        function searchDictionary() {
+            const inputStr = document.getElementById("searchInput").value;
+            const resultIndex = binarySearch(sortedKeys, inputStr);
+            const resultDiv = document.getElementById("result");
+
+            if (resultIndex !== -1) {
+                const key = sortedKeys[resultIndex];
+                resultDiv.innerText = `Value: ${jsonDictionary[key]}`;
+            } else {
+                resultDiv.innerText = "Key not found";
+            }
+        }
+
+        // Fetch JSON data and initialize dictionary and sorted keys
+        window.onload = function() {
+            fetch('data.json')
+                .then(response => response.json())
+                .then(data => {
+                    jsonDictionary = data;
+                    sortedKeys = Object.keys(jsonDictionary);
+                })
+                .catch(error => {
+                    console.error('Error loading JSON file:', error);
+                });
+        };
+    </script>
+</head>
+<body>
+    <h1>Dictionary Search</h1>
+    <input type="text" id="searchInput" placeholder="Enter a key">
+    <button onclick="searchDictionary()">Search</button>
+    <div id="result"></div>
+</body>
+</html>
