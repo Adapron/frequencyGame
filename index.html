@@ -33,13 +33,25 @@
         function searchDictionary() {
             const inputStr = document.getElementById("searchInput").value;
             const resultIndex = binarySearch(sortedKeys, inputStr);
-            const resultDiv = document.getElementById("result");
+            //const resultDiv = document.getElementById("result");
+
+            var resultDiv = document.createElement("div");
+            
+
+            
 
             if (resultIndex !== -1) {
                 const key = sortedKeys[resultIndex];
-                resultDiv.innerText = `Value: ${jsonDictionary[key]}`;
+                resultDiv.innerText = `${inputStr}: ${jsonDictionary[key]}`;
             } else {
-                resultDiv.innerText = "Key not found";
+                resultDiv.innerText = `${inputStr}: not found`;
+            }
+            // Append the resultDiv to the start of the list with id "results"
+            const firstChild = document.getElementById("results").firstChild;
+            if (firstChild) {
+                document.getElementById("results").insertBefore(resultDiv, firstChild);
+            } else {
+                document.getElementById("results").appendChild(resultDiv);
             }
         }
 
@@ -62,5 +74,9 @@
     <input type="text" id="searchInput" placeholder="Enter a key">
     <button onclick="searchDictionary()">Search</button>
     <div id="result"></div>
+    
+    <li id = "results">
+        
+    </li>
 </body>
 </html>
