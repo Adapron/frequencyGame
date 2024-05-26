@@ -8,6 +8,10 @@
         let jsonDictionary = {};
         let sortedKeys = [];
 
+        function sanitizeInput(str) {
+            return str.trim().toLowerCase();
+        }
+
         // Function to perform binary search
         function binarySearch(arr, target) {
             let left = 0;
@@ -15,7 +19,7 @@
             
             while (left <= right) {
                 const mid = Math.floor((left + right) / 2);
-                const midVal = arr[mid];
+                const midVal = sanitizeInput(arr[mid]);
                 
                 if (midVal === target) {
                     return mid;
@@ -26,12 +30,12 @@
                 }
             }
             
-            return -1;
+            return -mid;
         }
 
         // Function to handle search
         function searchDictionary() {
-            const inputStr = document.getElementById("searchInput").value;
+            const inputStr = sanitizeInput(document.getElementById("searchInput").value);
             const resultIndex = binarySearch(sortedKeys, inputStr);
             //const resultDiv = document.getElementById("result");
 
@@ -40,11 +44,11 @@
 
             
 
-            if (resultIndex !== -1) {
+            if (resultIndex >= 0) {
                 const key = sortedKeys[resultIndex];
                 resultDiv.innerText = `${inputStr}: ${jsonDictionary[key]}`;
             } else {
-                resultDiv.innerText = `${inputStr}: not found`;
+                resultDiv.innerText = `${inputStr}: not found, did you mean ${jsonDictionary[-key]}, ${jsonDictionary[-key+1]}, ${jsonDictionary[-key-1]}`;
             }
             // Append the resultDiv to the start of the list with id "results"
             const firstChild = document.getElementById("results").firstChild;
